@@ -1,0 +1,148 @@
+﻿node.exe : (node:8628) [DEP0176] DeprecationWarning: fs.F_OK 
+is deprecated, use fs.constants.F_OK instead
+At C:\Users\hp\AppData\Roaming\npm\newman.ps1:24 char:5
++     & "node$exe"  
+"$basedir/node_modules/newman/bin/newman.js" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:8628) [DE.. 
+   .ts.F_OK instead:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-deprecation ...` to show where the warning 
+was created)
+newman
+
+lab05
+
+тЦб 1. Happy path: active student with prerequisite registers (201 OK)
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 42ms]
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 5ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [201 Created, 202B, 5ms]
+  тИЪ  Status is 201
+  тИЪ  result is OK
+  тИЪ  registrationID is a number
+
+тЦб 2. Nonexistent student gets ERROR_NO_STUDENT
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 5ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [200 OK, 192B, 5ms]
+  тИЪ  Status is 200
+  тИЪ  result is ERROR_NO_STUDENT
+
+тЦб 3. Inactive student gets ERROR_INACTIVE_STUDENT
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 5ms]
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 5ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [200 OK, 198B, 5ms]
+  тИЪ  Status is 200
+  тИЪ  result is ERROR_INACTIVE_STUDENT
+
+тЦб 4. Nonexistent course gets ERROR_NO_COURSE
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 5ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [200 OK, 191B, 5ms]
+  тИЪ  Status is 200
+  тИЪ  result is ERROR_NO_COURSE
+
+тЦб 5. No prerequisites taken gets ERROR_PREREQUISITES
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 4ms]
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 4ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [200 OK, 215B, 4ms]
+  тИЪ  Status is 200
+  тИЪ  result is ERROR_PREREQUISITES
+  тИЪ  missing list is correct
+
+тЦб 6. Only some prerequisites taken gets ERROR_PREREQUISITES
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 5ms]
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 4ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [200 OK, 215B, 5ms]
+  тИЪ  Status is 200
+  тИЪ  result is ERROR_PREREQUISITES
+  тИЪ  missing list is correct
+
+тЦб 7. Double error: no student and no course reports ERROR_NO_STUDENT first
+тФФ POST registration
+  POST http://localhost:3000/registrations [200 OK, 192B, 4ms]
+  тИЪ  Status is 200
+  тИЪ  result is ERROR_NO_STUDENT
+
+тЦб 8. Double error: inactive student with missing prerequisites reports ERROR_INACTIVE_STUDENT first
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 3ms]
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 4ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [200 OK, 198B, 3ms]
+  тИЪ  Status is 200
+  тИЪ  result is ERROR_INACTIVE_STUDENT
+
+тЦб 9. Boundary: course without prerequisites and empty coursesTaken registers (201 OK)
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 4ms]
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 4ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [201 Created, 202B, 4ms]
+  тИЪ  Status is 201
+  тИЪ  result is OK
+  тИЪ  registrationID is a number
+
+тЦб 10. Boundary: missing courseID gets 400 ERROR_BAD_REQUEST
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 4ms]
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 5ms]
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 4ms]
+  тИЪ  Status is 400
+  тИЪ  result is ERROR_BAD_REQUEST
+
+тФМтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФмтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФмтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФР
+тФВ                         тФВ        executed тФВ          failed тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ              iterations тФВ               1 тФВ               0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ                requests тФВ              26 тФВ               0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ            test-scripts тФВ              10 тФВ               0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ      prerequest-scripts тФВ               0 тФВ               0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ              assertions тФВ              24 тФВ               0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ┤тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ┤тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ total run duration: 2.3s                                    тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ total data received: 598B (approx)                          тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ average response time: 5ms [min: 3ms, max: 42ms, s.d.: 7ms] тФВ
+тФФтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФШ

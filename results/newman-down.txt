@@ -1,0 +1,411 @@
+﻿newman
+
+lab05
+
+тЦб 1. Happy path: active student with prerequisite registers (201 OK)
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+  4. Status is 201
+  5. result is OK
+  6. registrationID is a number
+
+тЦб 2. Nonexistent student gets ERROR_NO_STUDENT
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+  9. Status is 200
+ 10. result is ERROR_NO_STUDENT
+
+тЦб 3. Inactive student gets ERROR_INACTIVE_STUDENT
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 14. Status is 200
+ 15. result is ERROR_INACTIVE_STUDENT
+
+тЦб 4. Nonexistent course gets ERROR_NO_COURSE
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 18. Status is 200
+ 19. result is ERROR_NO_COURSE
+
+тЦб 5. No prerequisites taken gets ERROR_PREREQUISITES
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 23. Status is 200
+ 24. result is ERROR_PREREQUISITES
+ 25. missing list is correct
+
+тЦб 6. Only some prerequisites taken gets ERROR_PREREQUISITES
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 29. Status is 200
+ 30. result is ERROR_PREREQUISITES
+ 31. missing list is correct
+
+тЦб 7. Double error: no student and no course reports ERROR_NO_STUDENT first
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 33. Status is 200
+ 34. result is ERROR_NO_STUDENT
+
+тЦб 8. Double error: inactive student with missing prerequisites reports ERROR_INACTIVE_STUDENT first
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 38. Status is 200
+ 39. result is ERROR_INACTIVE_STUDENT
+
+тЦб 9. Boundary: course without prerequisites and empty coursesTaken registers (201 OK)
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 43. Status is 201
+ 44. result is OK
+ 45. registrationID is a number
+
+тЦб 10. Boundary: missing courseID gets 400 ERROR_BAD_REQUEST
+тФФ PUT student
+  PUT http://localhost:3000/students/B231234567 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ PUT course
+  PUT http://localhost:3000/courses/CS313 [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+
+тФФ POST registration
+  POST http://localhost:3000/registrations [errored]
+     connect ECONNREFUSED 127.0.0.1:3000
+ 49. Status is 400
+ 50. result is ERROR_BAD_REQUEST
+
+тФМтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФмтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФмтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФР
+тФВ                         тФВ executed тФВ   failed тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ              iterations тФВ        1 тФВ        0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ                requests тФВ       26 тФВ       26 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ            test-scripts тФВ       10 тФВ        0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ      prerequest-scripts тФВ        0 тФВ        0 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ              assertions тФВ       24 тФВ       24 тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ┤тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ┤тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ total run duration: 2.4s                      тФВ
+тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
+тФВ total data received: 0B (approx)              тФВ
+тФФтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФШ
+
+[31m   # [39m[31m failure        [39m[31m detail                                                                                                                         [39m
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 01.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 02.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 03.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 04.  AssertionError  Status is 201                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "1. Happy path: active student with prerequisite registers (201 OK) / POST registration"                                
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 05.  JSONError       result is OK                                                                                                                   
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "1. Happy path: active student with prerequisite registers (201 OK) / POST registration"                                
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 06.  JSONError       registrationID is a number                                                                                                     
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:2 in test-script                                                                                                  
+                      inside "1. Happy path: active student with prerequisite registers (201 OK) / POST registration"                                
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 07.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 08.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 09.  AssertionError  Status is 200                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "2. Nonexistent student gets ERROR_NO_STUDENT / POST registration"                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 10.  JSONError       result is ERROR_NO_STUDENT                                                                                                     
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "2. Nonexistent student gets ERROR_NO_STUDENT / POST registration"                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 11.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 12.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 13.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 14.  AssertionError  Status is 200                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "3. Inactive student gets ERROR_INACTIVE_STUDENT / POST registration"                                                   
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 15.  JSONError       result is ERROR_INACTIVE_STUDENT                                                                                               
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "3. Inactive student gets ERROR_INACTIVE_STUDENT / POST registration"                                                   
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 16.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 17.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 18.  AssertionError  Status is 200                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "4. Nonexistent course gets ERROR_NO_COURSE / POST registration"                                                        
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 19.  JSONError       result is ERROR_NO_COURSE                                                                                                      
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "4. Nonexistent course gets ERROR_NO_COURSE / POST registration"                                                        
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 20.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 21.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 22.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 23.  AssertionError  Status is 200                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "5. No prerequisites taken gets ERROR_PREREQUISITES / POST registration"                                                
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 24.  JSONError       result is ERROR_PREREQUISITES                                                                                                  
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "5. No prerequisites taken gets ERROR_PREREQUISITES / POST registration"                                                
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 25.  JSONError       missing list is correct                                                                                                        
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:2 in test-script                                                                                                  
+                      inside "5. No prerequisites taken gets ERROR_PREREQUISITES / POST registration"                                                
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 26.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 27.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 28.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 29.  AssertionError  Status is 200                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "6. Only some prerequisites taken gets ERROR_PREREQUISITES / POST registration"                                         
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 30.  JSONError       result is ERROR_PREREQUISITES                                                                                                  
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "6. Only some prerequisites taken gets ERROR_PREREQUISITES / POST registration"                                         
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 31.  JSONError       missing list is correct                                                                                                        
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:2 in test-script                                                                                                  
+                      inside "6. Only some prerequisites taken gets ERROR_PREREQUISITES / POST registration"                                         
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 32.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 33.  AssertionError  Status is 200                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "7. Double error: no student and no course reports ERROR_NO_STUDENT first / POST registration"                          
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 34.  JSONError       result is ERROR_NO_STUDENT                                                                                                     
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "7. Double error: no student and no course reports ERROR_NO_STUDENT first / POST registration"                          
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 35.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 36.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 37.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 38.  AssertionError  Status is 200                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "8. Double error: inactive student with missing prerequisites reports ERROR_INACTIVE_STUDENT first / POST registration" 
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 39.  JSONError       result is ERROR_INACTIVE_STUDENT                                                                                               
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "8. Double error: inactive student with missing prerequisites reports ERROR_INACTIVE_STUDENT first / POST registration" 
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 40.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 41.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 42.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 43.  AssertionError  Status is 201                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "9. Boundary: course without prerequisites and empty coursesTaken registers (201 OK) / POST registration"               
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 44.  JSONError       result is OK                                                                                                                   
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "9. Boundary: course without prerequisites and empty coursesTaken registers (201 OK) / POST registration"               
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 45.  JSONError       registrationID is a number                                                                                                     
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:2 in test-script                                                                                                  
+                      inside "9. Boundary: course without prerequisites and empty coursesTaken registers (201 OK) / POST registration"               
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 46.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 47.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 48.  Error                                                                                                                                          
+                      connect ECONNREFUSED 127.0.0.1:3000                                                                                            
+                      at request                                                                                                                     
+                      inside ""                                                                                                                      
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 49.  AssertionError  Status is 400                                                                                                                  
+                      expected PostmanResponse{ тАж(5) } to have property 'code'                                                                       
+                      at assertion:0 in test-script                                                                                                  
+                      inside "10. Boundary: missing courseID gets 400 ERROR_BAD_REQUEST / POST registration"                                         
+[90m     [39m[90m                [39m[90m                                                                                                                                [39m
+ 50.  JSONError       result is ERROR_BAD_REQUEST                                                                                                    
+                      "undefined" is not valid JSON                                                                                                  
+                      at assertion:1 in test-script                                                                                                  
+                      inside "10. Boundary: missing courseID gets 400 ERROR_BAD_REQUEST / POST registration"                                         
