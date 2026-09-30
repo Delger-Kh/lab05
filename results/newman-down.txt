@@ -2,161 +2,161 @@
 
 lab05
 
-тЦб 1. Happy path: active student with prerequisite registers (201 OK)
-тФФ PUT student
+Folder 1. Happy path: active student with prerequisite registers (201 OK)
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ PUT course
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
   4. Status is 201
   5. result is OK
   6. registrationID is a number
 
-тЦб 2. Nonexistent student gets ERROR_NO_STUDENT
-тФФ PUT course
+Folder 2. Nonexistent student gets ERROR_NO_STUDENT
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
   9. Status is 200
  10. result is ERROR_NO_STUDENT
 
-тЦб 3. Inactive student gets ERROR_INACTIVE_STUDENT
-тФФ PUT student
+Folder 3. Inactive student gets ERROR_INACTIVE_STUDENT
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ PUT course
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  14. Status is 200
  15. result is ERROR_INACTIVE_STUDENT
 
-тЦб 4. Nonexistent course gets ERROR_NO_COURSE
-тФФ PUT student
+Folder 4. Nonexistent course gets ERROR_NO_COURSE
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  18. Status is 200
  19. result is ERROR_NO_COURSE
 
-тЦб 5. No prerequisites taken gets ERROR_PREREQUISITES
-тФФ PUT student
+Folder 5. No prerequisites taken gets ERROR_PREREQUISITES
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ PUT course
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  23. Status is 200
  24. result is ERROR_PREREQUISITES
  25. missing list is correct
 
-тЦб 6. Only some prerequisites taken gets ERROR_PREREQUISITES
-тФФ PUT student
+Folder 6. Only some prerequisites taken gets ERROR_PREREQUISITES
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ PUT course
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  29. Status is 200
  30. result is ERROR_PREREQUISITES
  31. missing list is correct
 
-тЦб 7. Double error: no student and no course reports ERROR_NO_STUDENT first
-тФФ POST registration
+Folder 7. Double error: no student and no course reports ERROR_NO_STUDENT first
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  33. Status is 200
  34. result is ERROR_NO_STUDENT
 
-тЦб 8. Double error: inactive student with missing prerequisites reports ERROR_INACTIVE_STUDENT first
-тФФ PUT student
+Folder 8. Double error: inactive student with missing prerequisites reports ERROR_INACTIVE_STUDENT first
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ PUT course
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  38. Status is 200
  39. result is ERROR_INACTIVE_STUDENT
 
-тЦб 9. Boundary: course without prerequisites and empty coursesTaken registers (201 OK)
-тФФ PUT student
+Folder 9. Boundary: course without prerequisites and empty coursesTaken registers (201 OK)
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ PUT course
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  43. Status is 201
  44. result is OK
  45. registrationID is a number
 
-тЦб 10. Boundary: missing courseID gets 400 ERROR_BAD_REQUEST
-тФФ PUT student
+Folder 10. Boundary: missing courseID gets 400 ERROR_BAD_REQUEST
+Sub-folder PUT student
   PUT http://localhost:3000/students/B231234567 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ PUT course
+Sub-folder PUT course
   PUT http://localhost:3000/courses/CS313 [errored]
      connect ECONNREFUSED 127.0.0.1:3000
 
-тФФ POST registration
+Sub-folder POST registration
   POST http://localhost:3000/registrations [errored]
      connect ECONNREFUSED 127.0.0.1:3000
  49. Status is 400
  50. result is ERROR_BAD_REQUEST
 
-тФМтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФмтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФмтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФР
-тФВ                         тФВ executed тФВ   failed тФВ
-тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
-тФВ              iterations тФВ        1 тФВ        0 тФВ
-тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
-тФВ                requests тФВ       26 тФВ       26 тФВ
-тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
-тФВ            test-scripts тФВ       10 тФВ        0 тФВ
-тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
-тФВ      prerequest-scripts тФВ        0 тФВ        0 тФВ
-тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ╝тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
-тФВ              assertions тФВ       24 тФВ       24 тФВ
-тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ┤тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФ┤тФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
-тФВ total run duration: 2.4s                      тФВ
-тФЬтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФд
-тФВ total data received: 0B (approx)              тФВ
-тФФтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФАтФШ
+-------------------------------------------------
+|                         | executed |   failed |
+--------------------------+----------+-----------
+|              iterations |        1 |        0 |
+--------------------------+----------+-----------
+|                requests |       26 |       26 |
+--------------------------+----------+-----------
+|            test-scripts |       10 |        0 |
+--------------------------+----------+-----------
+|      prerequest-scripts |        0 |        0 |
+--------------------------+----------+-----------
+|              assertions |       24 |       24 |
+-------------------------------------------------
+| total run duration: 2.3s                      |
+-------------------------------------------------
+| total data received: 0B (approx)              |
+-------------------------------------------------
 
 [31m   # [39m[31m failure        [39m[31m detail                                                                                                                         [39m
 [90m     [39m[90m                [39m[90m                                                                                                                                [39m
